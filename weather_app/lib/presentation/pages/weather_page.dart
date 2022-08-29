@@ -16,7 +16,8 @@ class WeatherPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final location = ModalRoute.of(context)!.settings.arguments as String;
+    final String location =
+        ModalRoute.of(context)!.settings.arguments as String;
     return RepositoryProvider(
       create: (context) => WeatherRepository(location),
       child: BlocProvider(
@@ -32,10 +33,14 @@ class WeatherPage extends StatelessWidget {
                 ),
               );
             } else if (state is WeatherLoadedState) {
-              final weather = state.weather;
+              final WeatherData weather = state.weather;
               return WeatherSuccesPage(weather: weather);
             }
-            return Container();
+            return const Scaffold(
+              body: Center(
+                child: Text('Error'),
+              ),
+            );
           },
         ),
       ),

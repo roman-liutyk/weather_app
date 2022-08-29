@@ -10,7 +10,7 @@ class WeatherRepository {
   WeatherRepository(this.location);
 
   Future<WeatherData> getWeatherData() async {
-    final url = Uri.https(
+    final Uri url = Uri.https(
       _path,
       '/data/2.5/weather',
       {
@@ -22,7 +22,7 @@ class WeatherRepository {
     );
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      final json = jsonDecode(response.body) as Map<String, dynamic>;
+      final Map<String, dynamic> json = jsonDecode(response.body);
       return WeatherData.fromJson(json);
     } else {
       throw Exception(response.reasonPhrase);

@@ -10,7 +10,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,18 +32,20 @@ class _SearchPageState extends State<SearchPage> {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(
-                    '/weather',
-                    arguments: _controller.text.trim(),
-                  );
-                },
+                onPressed: searchButtonAction,
                 child: const Text('Show Weather'),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void searchButtonAction() {
+    Navigator.of(context).pushNamed(
+      '/weather',
+      arguments: _controller.text.trim(),
     );
   }
 }
