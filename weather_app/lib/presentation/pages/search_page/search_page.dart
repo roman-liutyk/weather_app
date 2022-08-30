@@ -27,6 +27,7 @@ class _SearchPageState extends State<SearchPage> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                 ),
+                onEditingComplete: searchButtonAction,
               ),
               const SizedBox(
                 height: 20,

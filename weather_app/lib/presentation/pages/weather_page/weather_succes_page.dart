@@ -12,7 +12,6 @@ class WeatherSuccesPage extends StatelessWidget {
         'http://openweathermap.org/img/wn/${weather.weatherDetails[0].icon}@2x.png';
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
         body: Column(
           children: [
             _MainWeatherInfo(imagePath: imagePath, weather: weather),
@@ -38,7 +37,7 @@ class _MainWeatherInfo extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: size.height / 2,
+      height: size.height * 2 / 3,
       decoration: const BoxDecoration(
           color: Colors.black87,
           image: DecorationImage(
@@ -57,9 +56,21 @@ class _MainWeatherInfo extends StatelessWidget {
             ),
           ]),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(
             height: 32,
+          ),
+          const Text(
+            'Current weather:',
+            style: TextStyle(
+              fontSize: 24,
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(
+            height: 24,
           ),
           Text(
             weather.name,
@@ -75,7 +86,7 @@ class _MainWeatherInfo extends StatelessWidget {
             height: 125,
             width: 125,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(
@@ -119,6 +130,40 @@ class _MainWeatherInfo extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
+          const SizedBox(
+            height: 16,
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(
+                Colors.grey[200],
+              ),
+            ),
+            child: SizedBox(
+              width: size.width / 3.5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(
+                    Icons.arrow_back_rounded,
+                    color: Color.fromARGB(255, 90, 167, 230),
+                  ),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  Text(
+                    'Return',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 90, 167, 230),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
