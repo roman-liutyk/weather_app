@@ -1,5 +1,5 @@
 import 'dart:convert';
-import '../../domain/entity/weather_data.dart';
+import '../../domain/entity/weather_data/weather_data.dart';
 import 'package:http/http.dart' as http;
 
 class WeatherRepository {

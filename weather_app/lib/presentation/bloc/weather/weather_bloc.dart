@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:weather_app/data/repos/weather_repository.dart';
-import 'package:weather_app/domain/entity/weather_data.dart';
+import 'package:weather_app/domain/entity/weather_data/weather_data.dart';
 import 'package:weather_app/presentation/bloc/weather/weather_event.dart';
 import 'package:weather_app/presentation/bloc/weather/weather_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
