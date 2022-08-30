@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/domain/entity/weather_data/weather_data.dart';
+import 'package:weather_app/data/datasource/remote.dart';
+import 'package:weather_app/domain/entity/weather_data/weather.dart';
 import 'package:weather_app/presentation/bloc/weather/weather_bloc.dart';
 import 'package:weather_app/presentation/bloc/weather/weather_event.dart';
 import 'package:weather_app/presentation/bloc/weather/weather_state.dart';
 import 'package:weather_app/presentation/pages/weather_page/weather_succes_page.dart';
-
 import '../../../data/repos/weather_repository.dart';
 
 class WeatherPage extends StatelessWidget {
@@ -20,11 +20,11 @@ class WeatherPage extends StatelessWidget {
     final String location =
         ModalRoute.of(context)!.settings.arguments as String;
     return RepositoryProvider(
-      create: (context) => WeatherRepository(location),
+      create: (context) => WeatherRepository(RemoteDataSource()),
       child: BlocProvider(
         create: (context) =>
             WeatherBloc(RepositoryProvider.of<WeatherRepository>(context))
-              ..add(LoadWeatherEvent()),
+              ..add(LoadWeatherEvent(location: location)),
         child: BlocBuilder<WeatherBloc, WeatherState>(
           builder: (context, state) {
             if (state is WeatherLoadingState) {
@@ -34,7 +34,7 @@ class WeatherPage extends StatelessWidget {
                 ),
               );
             } else if (state is WeatherLoadedState) {
-              final WeatherData weather = state.weather;
+              final Weather weather = state.weather;
               return WeatherSuccesPage(weather: weather);
             }
             return Scaffold(
@@ -65,5 +65,3 @@ class WeatherPage extends StatelessWidget {
     );
   }
 }
-
-

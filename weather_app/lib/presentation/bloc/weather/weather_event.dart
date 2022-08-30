@@ -8,8 +8,12 @@ class WeatherEvent extends Equatable {
 }
 
 class LoadWeatherEvent extends WeatherEvent {
+  final String location;
+
+  LoadWeatherEvent({required this.location});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [location];
 }
 
 class SearchWeatherEvent extends WeatherEvent {

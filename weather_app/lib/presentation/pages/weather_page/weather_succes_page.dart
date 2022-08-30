@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/domain/entity/weather_data/weather.dart';
 
-import '../../../domain/entity/weather_data/weather_data.dart';
 
 class WeatherSuccesPage extends StatelessWidget {
-  final WeatherData weather;
+  final Weather weather;
   const WeatherSuccesPage({Key? key, required this.weather}) : super(key: key);
 
   @override
@@ -28,7 +28,7 @@ class _MainWeatherInfo extends StatelessWidget {
   }) : super(key: key);
 
   final String imagePath;
-  final WeatherData weather;
+  final Weather weather;
 
   @override
   Widget build(BuildContext context) {

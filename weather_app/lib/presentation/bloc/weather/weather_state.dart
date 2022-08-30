@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_app/domain/entity/weather_data/weather_data.dart';
+import 'package:weather_app/domain/entity/weather_data/weather.dart';
 
 @immutable
 abstract class WeatherState extends Equatable {}
@@ -16,7 +16,7 @@ class WeatherLoadingState extends WeatherState {
 }
 
 class WeatherLoadedState extends WeatherState {
-  final WeatherData weather;
+  final Weather weather;
 
   WeatherLoadedState(this.weather);
 

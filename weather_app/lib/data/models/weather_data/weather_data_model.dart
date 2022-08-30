@@ -22,67 +22,67 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'weather_data.g.dart';
+part 'weather_data_model.g.dart';
 
 @JsonSerializable()
-class WeatherData {
+class WeatherDataTableModel {
   String name;
   @JsonKey(name: 'weather')
-  List<WeatherDetails> weatherDetails;
+  List<WeatherDetailsTableModel> weatherDetails;
   @JsonKey(name: 'main')
-  TemperatureDetails tempDetails;
+  TemperatureDetailsTableModel tempDetails;
   @JsonKey(name: 'wind')
-  WindDetails windDetails;
+  WindDetailsTableModel windDetails;
 
-  WeatherData({
+  WeatherDataTableModel({
     required this.name,
     required this.weatherDetails,
     required this.tempDetails,
     required this.windDetails,
   });
 
-  factory WeatherData.fromJson(Map<String, dynamic> json) =>
-      _$WeatherDataFromJson(json);
+  factory WeatherDataTableModel.fromJson(Map<String, dynamic> json) =>
+      _$WeatherDataTableModelFromJson(json);
 }
 
 @JsonSerializable()
-class WeatherDetails {
+class WeatherDetailsTableModel {
   String main;
   String description;
   String icon;
 
-  WeatherDetails({
+  WeatherDetailsTableModel({
     required this.main,
     required this.description,
     required this.icon,
   });
 
-  factory WeatherDetails.fromJson(Map<String, dynamic> json) =>
-      _$WeatherDetailsFromJson(json);
+  factory WeatherDetailsTableModel.fromJson(Map<String, dynamic> json) =>
+      _$WeatherDetailsTableModelFromJson(json);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class TemperatureDetails {
+class TemperatureDetailsTableModel {
   double temp;
   double feelsLike;
 
-  TemperatureDetails({
+  TemperatureDetailsTableModel({
     required this.temp,
     required this.feelsLike,
   });
 
-  factory TemperatureDetails.fromJson(Map<String, dynamic> json) =>
-      _$TemperatureDetailsFromJson(json);
+  factory TemperatureDetailsTableModel.fromJson(Map<String, dynamic> json) =>
+      _$TemperatureDetailsTableModelFromJson(json);
 }
 
 @JsonSerializable()
-class WindDetails {
+class WindDetailsTableModel {
   double speed;
 
-  WindDetails({
+  WindDetailsTableModel({
     required this.speed,
   });
 
-  factory WindDetails.fromJson(Map<String, dynamic> json) =>
-      _$WindDetailsFromJson(json);
+  factory WindDetailsTableModel.fromJson(Map<String, dynamic> json) =>
+      _$WindDetailsTableModelFromJson(json);
 }

@@ -1,31 +1,17 @@
-import 'dart:convert';
-import '../../domain/entity/weather_data/weather_data.dart';
-import 'package:http/http.dart' as http;
+import 'package:weather_app/domain/entity/weather_data/weather.dart';
+
+import '../datasource/remote.dart';
+import '../models/weather_data/weather_data_model.dart';
 
 class WeatherRepository {
-  final String location;
-  final _apiKey = '45f632dbf7a6fdf04eae94ba4ad3fba3';
-  final _path = 'api.openweathermap.org';
+  final IRemoteDataSource datasource;
 
-  WeatherRepository(this.location);
+  WeatherRepository(this.datasource);
 
-  Future<WeatherData> getWeatherData() async {
-    final Uri url = Uri.https(
-      _path,
-      '/data/2.5/weather',
-      {
-        'q': location,
-        'units': 'metric',
-        'lang': 'en',
-        'appid': _apiKey,
-      },
-    );
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> json = jsonDecode(response.body);
-      return WeatherData.fromJson(json);
-    } else {
-      throw Exception(response.reasonPhrase);
-    }
+  Future<Weather> getWeatherData(String location) async {
+    final WeatherDataTableModel model =
+        await datasource.getWeatherData(location);
+    final Weather weather = Weather.fromTableModel(model);
+    return weather;
   }
 }
