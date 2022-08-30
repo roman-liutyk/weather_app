@@ -4,6 +4,7 @@ import 'package:weather_app/domain/entity/weather_data/weather_data.dart';
 import 'package:weather_app/presentation/bloc/weather/weather_bloc.dart';
 import 'package:weather_app/presentation/bloc/weather/weather_event.dart';
 import 'package:weather_app/presentation/bloc/weather/weather_state.dart';
+import 'package:weather_app/presentation/pages/weather_page/weather_succes_page.dart';
 
 import '../../../data/repos/weather_repository.dart';
 
@@ -36,9 +37,26 @@ class WeatherPage extends StatelessWidget {
               final WeatherData weather = state.weather;
               return WeatherSuccesPage(weather: weather);
             }
-            return const Scaffold(
-              body: Center(
-                child: Text('Error'),
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('Go Back'),
+                centerTitle: true,
+                elevation: 0,
+              ),
+              body: const Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
+                  child: Text(
+                    'Something went wrong!!! Maybee you entered the location in the wrong way!!!',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
             );
           },
@@ -48,29 +66,4 @@ class WeatherPage extends StatelessWidget {
   }
 }
 
-class WeatherSuccesPage extends StatelessWidget {
-  final WeatherData weather;
-  const WeatherSuccesPage({Key? key, required this.weather}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(weather.name),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(weather.name),
-            Text(weather.tempDetails.temp.round().toString()),
-            Text(weather.weatherDetails[0].main),
-            Text(weather.weatherDetails[0].description),
-          ],
-        ),
-      ),
-    );
-  }
-}
