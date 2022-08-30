@@ -10,13 +10,11 @@ class WeatherSuccesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final imagePath =
         'http://openweathermap.org/img/wn/${weather.weatherDetails[0].icon}@2x.png';
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            _MainWeatherInfo(imagePath: imagePath, weather: weather),
-          ],
-        ),
+    return Scaffold(
+      body: Column(
+        children: [
+          _MainWeatherInfo(imagePath: imagePath, weather: weather),
+        ],
       ),
     );
   }
@@ -37,17 +35,13 @@ class _MainWeatherInfo extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: size.height * 2 / 3,
+      height: size.height,
       decoration: const BoxDecoration(
           color: Colors.black87,
           image: DecorationImage(
             image: AssetImage('assets/images/bg_weather_image.jpg'),
             fit: BoxFit.cover,
-            opacity: 0.7,
-          ),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25),
-            bottomRight: Radius.circular(25),
+            opacity: 0.6,
           ),
           boxShadow: [
             BoxShadow(
@@ -59,7 +53,7 @@ class _MainWeatherInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(
-            height: 32,
+            height: 60,
           ),
           const Text(
             'Current weather:',
