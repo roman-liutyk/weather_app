@@ -28,14 +28,31 @@ class WeatherPage extends StatelessWidget {
         child: BlocBuilder<WeatherBloc, WeatherState>(
           builder: (context, state) {
             if (state is WeatherLoadingState) {
-              return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
+              return Scaffold(
+                body: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/bg_weather_image.png'),
+                      fit: BoxFit.cover,
+                      opacity: 0.5,
+                    ),
+                  ),
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               );
             } else if (state is WeatherLoadedState) {
               final Weather weather = state.weather;
-              return WeatherSuccesPage(weather: weather);
+              return RefreshIndicator(
+                child: WeatherSuccesPage(weather: weather),
+                onRefresh: () async => context.read<WeatherBloc>().add(
+                      LoadWeatherEvent(location: weather.name),
+                    ),
+              );
             }
             return Scaffold(
               appBar: AppBar(

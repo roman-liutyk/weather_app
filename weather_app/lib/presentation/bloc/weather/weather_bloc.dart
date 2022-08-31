@@ -5,7 +5,6 @@ import 'package:weather_app/presentation/bloc/weather/weather_event.dart';
 import 'package:weather_app/presentation/bloc/weather/weather_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final WeatherRepository _weatherRepository;
 
@@ -16,8 +15,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   Future<void> _loadWeather(event, emit) async {
     emit(WeatherLoadingState());
     try {
-      final Weather weather =
-          await _weatherRepository.getWeatherData((event as LoadWeatherEvent).location);
+      final Weather weather = await _weatherRepository
+          .getWeatherData((event as LoadWeatherEvent).location);
       emit(WeatherLoadedState(weather));
     } catch (e) {
       emit(WeatherErrorState(e.toString()));
