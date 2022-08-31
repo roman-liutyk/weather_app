@@ -28,13 +28,13 @@ class _SearchPageState extends State<SearchPage> {
                   border: OutlineInputBorder(),
                 ),
                 onEditingComplete: () =>
-                    searchButtonAction(_controller.text.trim()),
+                    _searchButtonAction(_controller.text.trim()),
               ),
               const SizedBox(
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: () => searchButtonAction(_controller.text.trim()),
+                onPressed: () => _searchButtonAction(_controller.text.trim()),
                 child: const Text('Show Weather'),
               ),
             ],
@@ -44,7 +44,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  void searchButtonAction(String location) {
+  void _searchButtonAction(String location) {
     if (location.isEmpty) return;
     Navigator.of(context).pushNamed('/weather', arguments: location);
   }
