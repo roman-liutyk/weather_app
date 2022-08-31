@@ -15,8 +15,3 @@ class LoadWeatherEvent extends WeatherEvent {
   @override
   List<Object> get props => [location];
 }
-
-class SearchWeatherEvent extends WeatherEvent {
-  @override
-  List<Object> get props => [];
-}

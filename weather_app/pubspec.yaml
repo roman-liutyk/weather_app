@@ -38,6 +38,7 @@ dependencies:
   flutter_native_splash: ^2.2.8
   flutter_launcher_icons: ^0.10.0
   google_fonts: ^3.0.1
+  searchfield: ^0.7.0
 
 flutter_native_splash:
   color: "#009dff"
