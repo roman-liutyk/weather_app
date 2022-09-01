@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:weather_app/data/datasource/remote.dart';
-import 'package:weather_app/data/repos/cities_repository.dart';
-import 'package:weather_app/domain/entity/cities/cities.dart';
-import 'package:weather_app/presentation/bloc/cities/cities_bloc.dart';
-import 'package:weather_app/presentation/bloc/cities/cities_event.dart';
-import 'package:weather_app/presentation/bloc/cities/cities_state.dart';
+import 'package:weather_app/data/repos/countries_repository.dart';
+import 'package:weather_app/domain/entity/cities/countries.dart';
+import 'package:weather_app/presentation/bloc/cities/countries_bloc.dart';
+import 'package:weather_app/presentation/bloc/cities/countries_event.dart';
+import 'package:weather_app/presentation/bloc/cities/countries_state.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -17,19 +17,20 @@ class SearchPage extends StatelessWidget {
       create: (BuildContext context) => CitiesRepository(RemoteDataSource()),
       child: BlocProvider(
         create: (BuildContext context) =>
-            CitiesBloc(RepositoryProvider.of<CitiesRepository>(context))
-              ..add(LoadCitiesEvent()),
-        child: BlocBuilder<CitiesBloc, CitiesState>(builder: (context, state) {
-          if (state is CitiesLoadingState) {
+            CountriesBloc(RepositoryProvider.of<CitiesRepository>(context))
+              ..add(LoadCountriesEvent()),
+        child: BlocBuilder<CountriesBloc, CountriesState>(
+            builder: (context, state) {
+          if (state is CountriesLoadingState) {
             return const Scaffold(
               body: Center(
                 child: CircularProgressIndicator(),
               ),
             );
-          } else if (state is CitiesLoadedState) {
+          } else if (state is CountriesLoadedState) {
             final List<String> cities = [];
-            for (City element in state.cities.data) {
-              for (String city in element.cities) {
+            for (Country country in state.countries.data) {
+              for (String city in country.cities) {
                 cities.add(city);
               }
             }
@@ -37,8 +38,8 @@ class SearchPage extends StatelessWidget {
           }
           return Scaffold(
             body: RefreshIndicator(
-              onRefresh: () async => context.read<CitiesBloc>().add(
-                    LoadCitiesEvent(),
+              onRefresh: () async => context.read<CountriesBloc>().add(
+                    LoadCountriesEvent(),
                   ),
               child: ListView(
                 children: const [

@@ -1,33 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'cities_data_model.dart';
+part of 'countries_data_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CitiesDataTableModel _$CitiesDataTableModelFromJson(
+CountriesDataTableModel _$CountriesDataTableModelFromJson(
         Map<String, dynamic> json) =>
-    CitiesDataTableModel(
+    CountriesDataTableModel(
       data: (json['data'] as List<dynamic>)
-          .map((e) => CityDataTableModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => CountryDataTableModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$CitiesDataTableModelToJson(
-        CitiesDataTableModel instance) =>
+Map<String, dynamic> _$CountriesDataTableModelToJson(
+        CountriesDataTableModel instance) =>
     <String, dynamic>{
       'data': instance.data,
     };
 
-CityDataTableModel _$CityDataTableModelFromJson(Map<String, dynamic> json) =>
-    CityDataTableModel(
+CountryDataTableModel _$CountryDataTableModelFromJson(
+        Map<String, dynamic> json) =>
+    CountryDataTableModel(
       country: json['country'] as String,
       cities:
           (json['cities'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$CityDataTableModelToJson(CityDataTableModel instance) =>
+Map<String, dynamic> _$CountryDataTableModelToJson(
+        CountryDataTableModel instance) =>
     <String, dynamic>{
       'country': instance.country,
       'cities': instance.cities,

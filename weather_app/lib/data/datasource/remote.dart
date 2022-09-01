@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:weather_app/data/models/cities_data/cities_data_model.dart';
+import 'package:weather_app/data/models/cities_data/countries_data_model.dart';
 
 import '../models/weather_data/weather_data_model.dart';
 import 'package:http/http.dart' as http;
 
 abstract class IRemoteDataSource {
   Future<WeatherDataTableModel> getWeatherData(String location);
-  Future<CitiesDataTableModel> getCities();
+  Future<CountriesDataTableModel> getCountries();
 }
 
 class RemoteDataSource implements IRemoteDataSource {
@@ -36,12 +36,12 @@ class RemoteDataSource implements IRemoteDataSource {
   }
 
   @override
-  Future<CitiesDataTableModel> getCities() async {
+  Future<CountriesDataTableModel> getCountries() async {
     final Uri url = Uri.parse('https://countriesnow.space/api/v0.1/countries');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final Map<String, dynamic> json = jsonDecode(response.body);
-      return CitiesDataTableModel.fromJson(json);
+      return CountriesDataTableModel.fromJson(json);
     } else {
       throw Exception(response.reasonPhrase);
     }

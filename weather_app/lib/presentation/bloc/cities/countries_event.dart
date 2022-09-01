@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class CitiesEvent extends Equatable {
+class CountriesEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class LoadCitiesEvent extends CitiesEvent {
+class LoadCountriesEvent extends CountriesEvent {
   @override
   List<Object?> get props => [];
 }
