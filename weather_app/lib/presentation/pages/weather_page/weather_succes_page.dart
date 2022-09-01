@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -16,8 +15,6 @@ class WeatherSuccesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final imagePath =
-        'http://openweathermap.org/img/wn/${currentWeather.weatherDetails[0].icon}@2x.png';
     return Scaffold(
       body: Container(
         width: size.width,
@@ -37,7 +34,7 @@ class WeatherSuccesPage extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            _WeatherMainInfo(imagePath: imagePath, weather: currentWeather),
+            _WeatherMainInfo(weather: currentWeather),
             _HourlyForecastWidget(
               weatherForecast: weatherForecast,
             ),
@@ -52,7 +49,6 @@ class _WeatherMainInfo extends StatelessWidget {
   const _WeatherMainInfo({
     Key? key,
     required this.weather,
-    required String imagePath,
   }) : super(key: key);
 
   final Weather weather;
@@ -63,7 +59,6 @@ class _WeatherMainInfo extends StatelessWidget {
         fontSize: fontSize,
         color: Colors.white,
         fontWeight: FontWeight.w400,
-        letterSpacing: 2,
       ),
     );
   }
@@ -138,7 +133,7 @@ class _HourlyForecastWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 225,
       clipBehavior: Clip.hardEdge,
       margin: const EdgeInsets.all(16),
       width: double.infinity,
@@ -149,6 +144,7 @@ class _HourlyForecastWidget extends StatelessWidget {
         ),
       ),
       child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
           itemCount: weatherForecast.list.length ~/ 5,
           padding: const EdgeInsets.only(
             left: 16,
@@ -156,10 +152,13 @@ class _HourlyForecastWidget extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             initializeDateFormatting();
-            final date = DateFormat.Hm()
+            final currentDay = DateFormat('E').format(DateTime.now());
+            final dateDay = DateFormat('E')
+                .format(DateTime.parse(weatherForecast.list[index].dtTxt));
+            final dateHour = DateFormat('Hm')
                 .format(DateTime.parse(weatherForecast.list[index].dtTxt));
             return Container(
-              width: 100,
+              width: 125,
               margin: const EdgeInsets.only(
                 right: 16,
               ),
@@ -177,7 +176,17 @@ class _HourlyForecastWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    date.toString(),
+                    currentDay == dateDay ? 'Today' : 'Tomorrow',
+                    style: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    dateHour.toString(),
                     style: GoogleFonts.montserrat(
                       textStyle: const TextStyle(
                         color: Colors.white,
