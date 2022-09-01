@@ -116,6 +116,7 @@ class _SearchPageFormState extends State<_SearchPageForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RichText(
+                  textAlign: TextAlign.left,
                   text: TextSpan(
                     children: const [
                       TextSpan(
