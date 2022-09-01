@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:weather_app/data/models/cities_data/countries_data_model.dart';
+import 'package:weather_app/data/models/countries_data/countries_data_model.dart';
 
 class Countries extends Equatable {
   final List<Country> data;

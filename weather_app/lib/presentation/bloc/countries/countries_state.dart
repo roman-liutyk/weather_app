@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:weather_app/domain/entity/cities/countries.dart';
+import 'package:weather_app/domain/entity/countries/countries.dart';
 
 abstract class CountriesState extends Equatable {}
 

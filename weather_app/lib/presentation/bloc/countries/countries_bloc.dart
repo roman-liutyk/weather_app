@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/data/repos/countries_repository.dart';
-import 'package:weather_app/domain/entity/cities/countries.dart';
-import 'package:weather_app/presentation/bloc/cities/countries_event.dart';
-import 'package:weather_app/presentation/bloc/cities/countries_state.dart';
+import 'package:weather_app/domain/entity/countries/countries.dart';
+import 'package:weather_app/presentation/bloc/countries/countries_event.dart';
+import 'package:weather_app/presentation/bloc/countries/countries_state.dart';
 
 class CountriesBloc extends Bloc<CountriesEvent, CountriesState> {
   final CitiesRepository _citiesRepository;

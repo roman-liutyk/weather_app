@@ -1,6 +1,6 @@
 import 'package:weather_app/data/datasource/remote.dart';
-import 'package:weather_app/data/models/cities_data/countries_data_model.dart';
-import 'package:weather_app/domain/entity/cities/countries.dart';
+import 'package:weather_app/data/models/countries_data/countries_data_model.dart';
+import 'package:weather_app/domain/entity/countries/countries.dart';
 
 class CitiesRepository {
   final IRemoteDataSource datasource;

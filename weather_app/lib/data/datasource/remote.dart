@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:weather_app/data/models/cities_data/countries_data_model.dart';
+import 'package:weather_app/data/models/countries_data/countries_data_model.dart';
 
 import '../models/weather_data/weather_data_model.dart';
 import 'package:http/http.dart' as http;
