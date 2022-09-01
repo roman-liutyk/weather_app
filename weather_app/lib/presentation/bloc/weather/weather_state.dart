@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/domain/entity/weather_data/weather.dart';
+import 'package:weather_app/domain/entity/weather_forecast/weather_forecast.dart';
 
 @immutable
 abstract class WeatherState extends Equatable {}
@@ -16,12 +17,13 @@ class WeatherLoadingState extends WeatherState {
 }
 
 class WeatherLoadedState extends WeatherState {
-  final Weather weather;
+  final WeatherForecast weatherForecast;
+  final Weather currentWeather;
 
-  WeatherLoadedState(this.weather);
+  WeatherLoadedState(this.weatherForecast, this.currentWeather);
 
   @override
-  List<Object> get props => [weather];
+  List<Object> get props => [weatherForecast, currentWeather];
 }
 
 class WeatherErrorState extends WeatherState {

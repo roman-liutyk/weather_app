@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/data/datasource/remote.dart';
 import 'package:weather_app/domain/entity/weather_data/weather.dart';
+import 'package:weather_app/domain/entity/weather_forecast/weather_forecast.dart';
 import 'package:weather_app/presentation/bloc/weather/weather_bloc.dart';
 import 'package:weather_app/presentation/bloc/weather/weather_event.dart';
 import 'package:weather_app/presentation/bloc/weather/weather_state.dart';
@@ -46,11 +47,15 @@ class WeatherPage extends StatelessWidget {
                 ),
               );
             } else if (state is WeatherLoadedState) {
-              final Weather weather = state.weather;
+              final Weather currenWeather = state.currentWeather;
+              final WeatherForecast weatherForecast = state.weatherForecast;
               return RefreshIndicator(
-                child: WeatherSuccesPage(weather: weather),
+                child: WeatherSuccesPage(
+                  currentWeather: currenWeather,
+                  weatherForecast: weatherForecast,
+                ),
                 onRefresh: () async => context.read<WeatherBloc>().add(
-                      LoadWeatherEvent(location: weather.name),
+                      LoadWeatherEvent(location: currenWeather.name),
                     ),
               );
             }

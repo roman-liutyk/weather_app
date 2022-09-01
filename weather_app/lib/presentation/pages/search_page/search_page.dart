@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:weather_app/data/datasource/remote.dart';
 import 'package:weather_app/data/repos/countries_repository.dart';
@@ -22,9 +23,19 @@ class SearchPage extends StatelessWidget {
         child: BlocBuilder<CountriesBloc, CountriesState>(
             builder: (context, state) {
           if (state is CountriesLoadingState) {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
+            return Scaffold(
+              body: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    Color.fromARGB(255, 0, 140, 255),
+                    Color.fromARGB(255, 85, 201, 255),
+                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                ),
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                ),
               ),
             );
           } else if (state is CountriesLoadedState) {
@@ -85,44 +96,123 @@ class _SearchPageFormState extends State<_SearchPageForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SearchField(
-                controller: _controller,
-                suggestions: cities
-                    .map((city) => SearchFieldListItem(city,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Color.fromARGB(255, 0, 140, 255),
+            Color.fromARGB(255, 85, 201, 255),
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Welcome',
+                        style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 60,
                           ),
-                          child: Text(
-                            city,
-                            style: const TextStyle(
-                              fontSize: 18,
+                        ),
+                      ),
+                      Text(
+                        'To my Weather App',
+                        style: GoogleFonts.montserrat(
+                          textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 60,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                        ),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                        height: 50,
+                        width: double.infinity,
+                        child: SearchField(
+                          controller: _controller,
+                          suggestions: cities
+                              .map((city) => SearchFieldListItem(city,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                    ),
+                                    child: Text(
+                                      city,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  )))
+                              .toList(),
+                          autoCorrect: false,
+                          searchInputDecoration: const InputDecoration(
+                            hintText: 'Enter your location',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () =>
+                              _searchButtonAction(_controller.text.trim()),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                              Colors.white,
+                            ),
+                            foregroundColor: MaterialStateProperty.all(
+                              Colors.blue[600],
+                            ),
+                            padding: MaterialStateProperty.all(
+                              const EdgeInsets.symmetric(
+                                vertical: 16,
+                              ),
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
                             ),
                           ),
-                        )))
-                    .toList(),
-                autoCorrect: false,
-                searchInputDecoration: const InputDecoration(
-                  hintText: 'Enter your location',
-                  border: OutlineInputBorder(),
+                          child: const Text('Show Weather'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                onPressed: () => _searchButtonAction(_controller.text.trim()),
-                child: const Text('Show Weather'),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

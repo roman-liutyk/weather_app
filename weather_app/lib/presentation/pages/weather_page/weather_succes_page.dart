@@ -1,62 +1,50 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/domain/entity/weather_data/weather.dart';
+import 'package:weather_app/domain/entity/weather_forecast/weather_forecast.dart';
 
 class WeatherSuccesPage extends StatelessWidget {
-  final Weather weather;
-  const WeatherSuccesPage({Key? key, required this.weather}) : super(key: key);
+  final Weather currentWeather;
+  final WeatherForecast weatherForecast;
+  const WeatherSuccesPage(
+      {Key? key, required this.currentWeather, required this.weatherForecast})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final imagePath =
-        'http://openweathermap.org/img/wn/${weather.weatherDetails[0].icon}@2x.png';
+        'http://openweathermap.org/img/wn/${currentWeather.weatherDetails[0].icon}@2x.png';
     return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          Container(
-            width: size.width,
-            height: size.height,
-            decoration: const BoxDecoration(
-                color: Colors.black87,
-                image: DecorationImage(
-                  image: AssetImage('assets/images/bg_weather_image.png'),
-                  fit: BoxFit.cover,
-                  opacity: 0.5,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black54,
-                    blurRadius: 10,
-                  ),
-                ]),
-            child: Column(
-              children: [
-                _MainWeatherInfo(imagePath: imagePath, weather: weather),
-                const _HourlyForecastWidget(),
-              ],
+      body: Container(
+        width: size.width,
+        decoration: const BoxDecoration(
+            color: Colors.black87,
+            image: DecorationImage(
+              image: AssetImage('assets/images/bg_weather_image.png'),
+              fit: BoxFit.cover,
+              opacity: 0.4,
             ),
-          ),
-        ],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black54,
+                blurRadius: 10,
+              ),
+            ]),
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            _WeatherMainInfo(imagePath: imagePath, weather: currentWeather),
+            _HourlyForecastWidget(
+              weatherForecast: weatherForecast,
+            ),
+          ],
+        ),
       ),
     );
-  }
-}
-
-class _MainWeatherInfo extends StatelessWidget {
-  const _MainWeatherInfo({
-    Key? key,
-    required this.imagePath,
-    required this.weather,
-  }) : super(key: key);
-
-  final String imagePath;
-  final Weather weather;
-
-  @override
-  Widget build(BuildContext context) {
-    return _WeatherMainInfo(weather: weather);
   }
 }
 
@@ -64,6 +52,7 @@ class _WeatherMainInfo extends StatelessWidget {
   const _WeatherMainInfo({
     Key? key,
     required this.weather,
+    required String imagePath,
   }) : super(key: key);
 
   final Weather weather;
@@ -142,42 +131,78 @@ class _WeatherMainInfo extends StatelessWidget {
 }
 
 class _HourlyForecastWidget extends StatelessWidget {
-  const _HourlyForecastWidget({Key? key}) : super(key: key);
+  final WeatherForecast weatherForecast;
+  const _HourlyForecastWidget({Key? key, required this.weatherForecast})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 200,
       clipBehavior: Clip.hardEdge,
       margin: const EdgeInsets.all(16),
-      height: 250,
       width: double.infinity,
       decoration: const BoxDecoration(
-        color: Colors.blueGrey,
+        color: Color.fromRGBO(0, 0, 0, 0.1),
         borderRadius: BorderRadius.all(
           Radius.circular(25),
         ),
       ),
       child: ListView.builder(
-        itemCount: 10,
-        padding: const EdgeInsets.only(
-          left: 16,
-        ),
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) => Container(
-          width: 125,
-          margin: const EdgeInsets.only(
-            bottom: 16,
-            top: 16,
-            right: 16,
+          itemCount: weatherForecast.list.length ~/ 5,
+          padding: const EdgeInsets.only(
+            left: 16,
           ),
-          decoration: const BoxDecoration(
-            color: Colors.orange,
-            borderRadius: BorderRadius.all(
-              Radius.circular(20),
-            ),
-          ),
-        ),
-      ),
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            initializeDateFormatting();
+            final date = DateFormat.Hm()
+                .format(DateTime.parse(weatherForecast.list[index].dtTxt));
+            return Container(
+              width: 100,
+              margin: const EdgeInsets.only(
+                right: 16,
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 20,
+              ),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    date.toString(),
+                    style: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  Image.network(
+                    'http://openweathermap.org/img/wn/${weatherForecast.list[index].weather[0].icon}@2x.png',
+                  ),
+                  Text(
+                    '${weatherForecast.list[index].main.temp.round()}°C',
+                    style: GoogleFonts.montserrat(
+                      textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
     );
   }
 }
