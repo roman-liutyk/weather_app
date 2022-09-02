@@ -7,6 +7,13 @@ class WeatherEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class InitWeatherEvent extends WeatherEvent {
+  InitWeatherEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
 class LoadWeatherEvent extends WeatherEvent {
   final String location;
 

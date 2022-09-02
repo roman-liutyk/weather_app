@@ -7,8 +7,11 @@ import 'package:weather_app/domain/entity/weather_forecast/weather_forecast.dart
 abstract class WeatherState extends Equatable {}
 
 class WeatherInitialState extends WeatherState {
+  final String location;
+
+  WeatherInitialState(this.location);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [location];
 }
 
 class WeatherLoadingState extends WeatherState {

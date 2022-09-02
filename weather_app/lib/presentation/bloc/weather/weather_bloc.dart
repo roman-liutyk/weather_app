@@ -9,8 +9,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   final WeatherRepository _weatherRepository;
 
-  WeatherBloc(this._weatherRepository) : super(WeatherInitialState()) {
+  WeatherBloc(this._weatherRepository) : super(WeatherInitialState('')) {
+    on<InitWeatherEvent>(_initWeather);
     on<LoadWeatherEvent>(_loadWeather);
+  }
+
+  Future<void> _initWeather(
+    InitWeatherEvent event,
+    Emitter<WeatherState> emit,
+  ) async {
+    final String location = await _weatherRepository.getFromSharedPreferences();
+    emit(WeatherInitialState(location));
   }
 
   Future<void> _loadWeather(event, emit) async {
@@ -21,6 +30,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
           await _weatherRepository.getWeatherData(location);
       final WeatherForecast weatherForecast =
           await _weatherRepository.getWeatherForecast(location);
+      await _weatherRepository.setToSharedPreferences(location);
       emit(WeatherLoadedState(weatherForecast, currentWeather));
     } catch (e) {
       emit(WeatherErrorState(e.toString()));

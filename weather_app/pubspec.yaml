@@ -40,6 +40,7 @@ dependencies:
   google_fonts: ^3.0.1
   searchfield: ^0.7.0
   intl: ^0.17.0
+  shared_preferences: ^2.0.15
 
 flutter_native_splash:
   color: "#009dff"

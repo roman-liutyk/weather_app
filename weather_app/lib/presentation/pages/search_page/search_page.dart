@@ -2,80 +2,71 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:searchfield/searchfield.dart';
-import 'package:weather_app/data/datasource/remote.dart';
-import 'package:weather_app/data/repos/countries_repository.dart';
 import 'package:weather_app/domain/entity/countries/countries.dart';
 import 'package:weather_app/presentation/bloc/countries/countries_bloc.dart';
 import 'package:weather_app/presentation/bloc/countries/countries_event.dart';
 import 'package:weather_app/presentation/bloc/countries/countries_state.dart';
+import 'package:weather_app/common/navigation/main_navigation.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (BuildContext context) => CitiesRepository(RemoteDataSource()),
-      child: BlocProvider(
-        create: (BuildContext context) =>
-            CountriesBloc(RepositoryProvider.of<CitiesRepository>(context))
-              ..add(LoadCountriesEvent()),
-        child: BlocBuilder<CountriesBloc, CountriesState>(
-            builder: (context, state) {
-          if (state is CountriesLoadingState) {
-            return Scaffold(
-              body: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    Color.fromARGB(255, 0, 140, 255),
-                    Color.fromARGB(255, 85, 201, 255),
-                  ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-                ),
-                child: const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            );
-          } else if (state is CountriesLoadedState) {
-            final List<String> cities = [];
-            for (Country country in state.countries.data) {
-              for (String city in country.cities) {
-                cities.add(city);
-              }
-            }
-            return _SearchPageForm(cities: cities);
-          }
-          return Scaffold(
-            body: RefreshIndicator(
-              onRefresh: () async => context.read<CountriesBloc>().add(
-                    LoadCountriesEvent(),
-                  ),
-              child: ListView(
-                children: const [
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16,
-                      ),
-                      child: Text(
-                        'Something went wrong!!! Check your internet connection and pull to refresh!!!',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ],
+    return BlocBuilder<CountriesBloc, CountriesState>(
+        builder: (context, state) {
+      if (state is CountriesLoadingState) {
+        return Scaffold(
+          body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Color.fromARGB(255, 0, 140, 255),
+                Color.fromARGB(255, 85, 201, 255),
+              ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+            ),
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
               ),
             ),
-          );
-        }),
-      ),
-    );
+          ),
+        );
+      } else if (state is CountriesLoadedState) {
+        final List<String> cities = [];
+        for (Country country in state.countries.data) {
+          for (String city in country.cities) {
+            cities.add(city);
+          }
+        }
+        return _SearchPageForm(cities: cities);
+      }
+      return Scaffold(
+        body: RefreshIndicator(
+          onRefresh: () async => context.read<CountriesBloc>().add(
+                LoadCountriesEvent(),
+              ),
+          child: ListView(
+            children: const [
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
+                  child: Text(
+                    'Something went wrong!!! Check your internet connection and pull to refresh!!!',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
   }
 }
 
@@ -211,6 +202,7 @@ class _SearchPageFormState extends State<_SearchPageForm> {
 
   void _searchButtonAction(String location) {
     if (location.isEmpty) return;
-    Navigator.of(context).pushNamed('/weather', arguments: location);
+    Navigator.of(context)
+        .pushNamed(MainNavigationRoutesNames.weatherPage, arguments: location);
   }
 }

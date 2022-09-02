@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/domain/entity/weather_data/weather.dart';
 import 'package:weather_app/domain/entity/weather_forecast/weather_forecast.dart';
@@ -130,6 +129,13 @@ class _HourlyForecastWidget extends StatelessWidget {
   const _HourlyForecastWidget({Key? key, required this.weatherForecast})
       : super(key: key);
 
+  TextStyle style() => GoogleFonts.montserrat(
+          textStyle: const TextStyle(
+        color: Colors.white,
+        fontSize: 20,
+        fontWeight: FontWeight.w400,
+      ));
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -151,11 +157,10 @@ class _HourlyForecastWidget extends StatelessWidget {
           ),
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            initializeDateFormatting();
-            final currentDay = DateFormat('E').format(DateTime.now());
-            final dateDay = DateFormat('E')
+            final String currentDay = DateFormat('E').format(DateTime.now());
+            final String dateDay = DateFormat('E')
                 .format(DateTime.parse(weatherForecast.list[index].dtTxt));
-            final dateHour = DateFormat('Hm')
+            final String dateHour = DateFormat('Hm')
                 .format(DateTime.parse(weatherForecast.list[index].dtTxt));
             return Container(
               width: 125,
@@ -177,36 +182,18 @@ class _HourlyForecastWidget extends StatelessWidget {
                 children: [
                   Text(
                     currentDay == dateDay ? 'Today' : 'Tomorrow',
-                    style: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
+                    style: style(),
                   ),
                   Text(
                     dateHour.toString(),
-                    style: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
+                    style: style(),
                   ),
                   Image.network(
                     'http://openweathermap.org/img/wn/${weatherForecast.list[index].weather[0].icon}@2x.png',
                   ),
                   Text(
                     '${weatherForecast.list[index].main.temp.round()}°C',
-                    style: GoogleFonts.montserrat(
-                      textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
+                    style: style(),
                   ),
                 ],
               ),
