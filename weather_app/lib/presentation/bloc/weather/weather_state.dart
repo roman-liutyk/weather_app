@@ -22,8 +22,9 @@ class WeatherLoadingState extends WeatherState {
 class WeatherLoadedState extends WeatherState {
   final WeatherForecast weatherForecast;
   final Weather currentWeather;
+  final LinearGradient? gradient;
 
-  WeatherLoadedState(this.weatherForecast, this.currentWeather);
+  WeatherLoadedState(this.weatherForecast, this.currentWeather, this.gradient);
 
   @override
   List<Object> get props => [weatherForecast, currentWeather];

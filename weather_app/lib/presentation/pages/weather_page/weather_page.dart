@@ -32,11 +32,13 @@ class _WeatherPageState extends State<WeatherPage> {
           return Scaffold(
             body: Container(
               decoration: const BoxDecoration(
-                color: Colors.black,
-                image: DecorationImage(
-                  image: AssetImage('assets/images/bg_weather_image.png'),
-                  fit: BoxFit.cover,
-                  opacity: 0.5,
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 0, 140, 255),
+                    Color.fromARGB(255, 85, 201, 255),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
               ),
               child: const Center(
@@ -49,10 +51,12 @@ class _WeatherPageState extends State<WeatherPage> {
         } else if (state is WeatherLoadedState) {
           final Weather currenWeather = state.currentWeather;
           final WeatherForecast weatherForecast = state.weatherForecast;
+          final LinearGradient? gradient = state.gradient;
           return RefreshIndicator(
             child: WeatherSuccesPage(
               currentWeather: currenWeather,
               weatherForecast: weatherForecast,
+              gradient: gradient!,
             ),
             onRefresh: () async => context.read<WeatherBloc>().add(
                   LoadWeatherEvent(location: currenWeather.name),

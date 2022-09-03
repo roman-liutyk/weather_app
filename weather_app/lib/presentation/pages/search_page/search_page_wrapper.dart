@@ -19,7 +19,8 @@ class SearchPageWrapper extends StatelessWidget {
                 arguments: state.location);
           }
         }
-      },child: const  SearchPage(),);
-      
+      },
+      child: const SearchPage(),
+    );
   }
 }

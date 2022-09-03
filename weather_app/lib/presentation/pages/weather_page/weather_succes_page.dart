@@ -7,8 +7,9 @@ import 'package:weather_app/domain/entity/weather_forecast/weather_forecast.dart
 class WeatherSuccesPage extends StatelessWidget {
   final Weather currentWeather;
   final WeatherForecast weatherForecast;
+  final LinearGradient gradient;
   const WeatherSuccesPage(
-      {Key? key, required this.currentWeather, required this.weatherForecast})
+      {Key? key, required this.currentWeather, required this.weatherForecast, required this.gradient})
       : super(key: key);
 
   @override
@@ -17,14 +18,9 @@ class WeatherSuccesPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         width: size.width,
-        decoration: const BoxDecoration(
-            color: Colors.black87,
-            image: DecorationImage(
-              image: AssetImage('assets/images/bg_weather_image.png'),
-              fit: BoxFit.cover,
-              opacity: 0.4,
-            ),
-            boxShadow: [
+        decoration: BoxDecoration(
+            gradient: gradient,
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black54,
                 blurRadius: 10,

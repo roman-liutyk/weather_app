@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:weather_app/data/repos/weather_repository.dart';
 import 'package:weather_app/domain/entity/weather_data/weather.dart';
 import 'package:weather_app/domain/entity/weather_forecast/weather_forecast.dart';
@@ -31,9 +32,55 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       final WeatherForecast weatherForecast =
           await _weatherRepository.getWeatherForecast(location);
       await _weatherRepository.setToSharedPreferences(location);
-      emit(WeatherLoadedState(weatherForecast, currentWeather));
+      final LinearGradient? gradient = _checkWeatherCode(currentWeather);
+      emit(WeatherLoadedState(weatherForecast, currentWeather, gradient));
     } catch (e) {
       emit(WeatherErrorState(e.toString()));
     }
+  }
+
+  LinearGradient? _checkWeatherCode(Weather currentWeather) {
+    final String weatherCode = currentWeather.weatherDetails[0].icon;
+    if (weatherCode.contains('01') || weatherCode.contains('02')) {
+      return const LinearGradient(
+        colors: [
+          Color.fromARGB(255, 204, 129, 16),
+          Color.fromARGB(255, 219, 67, 21),
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    } else if (weatherCode.contains('03') || weatherCode.contains('04')) {
+      return const LinearGradient(
+        colors: [
+          Color.fromARGB(255, 109, 109, 109),
+          Colors.blueGrey,
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    } else if (weatherCode.contains('09') ||
+        weatherCode.contains('10') ||
+        weatherCode.contains('13') ||
+        weatherCode.contains('50')) {
+      return const LinearGradient(
+        colors: [
+          Color.fromARGB(255, 2, 50, 208),
+          Color.fromARGB(255, 3, 1, 135),
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    } else if (weatherCode.contains('11')) {
+      return const LinearGradient(
+        colors: [
+          Colors.purple,
+          Colors.deepPurple,
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    }
+    return null;
   }
 }
