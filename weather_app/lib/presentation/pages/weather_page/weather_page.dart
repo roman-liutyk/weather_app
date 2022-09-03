@@ -51,12 +51,12 @@ class _WeatherPageState extends State<WeatherPage> {
         } else if (state is WeatherLoadedState) {
           final Weather currenWeather = state.currentWeather;
           final WeatherForecast weatherForecast = state.weatherForecast;
-          final LinearGradient? gradient = state.gradient;
+          final LinearGradient gradient = state.gradient;
           return RefreshIndicator(
             child: WeatherSuccesPage(
               currentWeather: currenWeather,
               weatherForecast: weatherForecast,
-              gradient: gradient!,
+              gradient: gradient,
             ),
             onRefresh: () async => context.read<WeatherBloc>().add(
                   LoadWeatherEvent(location: currenWeather.name),

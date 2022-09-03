@@ -32,14 +32,14 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       final WeatherForecast weatherForecast =
           await _weatherRepository.getWeatherForecast(location);
       await _weatherRepository.setToSharedPreferences(location);
-      final LinearGradient? gradient = _checkWeatherCode(currentWeather);
+      final LinearGradient gradient = _checkWeatherCode(currentWeather);
       emit(WeatherLoadedState(weatherForecast, currentWeather, gradient));
     } catch (e) {
       emit(WeatherErrorState(e.toString()));
     }
   }
 
-  LinearGradient? _checkWeatherCode(Weather currentWeather) {
+  LinearGradient _checkWeatherCode(Weather currentWeather) {
     final String weatherCode = currentWeather.weatherDetails[0].icon;
     if (weatherCode.contains('01') || weatherCode.contains('02')) {
       return const LinearGradient(
@@ -59,19 +59,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );
-    } else if (weatherCode.contains('09') ||
-        weatherCode.contains('10') ||
-        weatherCode.contains('13') ||
-        weatherCode.contains('50')) {
-      return const LinearGradient(
-        colors: [
-          Color.fromARGB(255, 2, 50, 208),
-          Color.fromARGB(255, 3, 1, 135),
-        ],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      );
-    } else if (weatherCode.contains('11')) {
+    }  else if (weatherCode.contains('11')) {
       return const LinearGradient(
         colors: [
           Colors.purple,
@@ -80,7 +68,15 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );
+    } else{
+      return const LinearGradient(
+        colors: [
+          Color.fromARGB(255, 2, 50, 208),
+          Color.fromARGB(255, 3, 1, 135),
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
     }
-    return null;
   }
 }

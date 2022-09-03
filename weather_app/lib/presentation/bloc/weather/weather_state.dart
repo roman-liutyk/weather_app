@@ -22,7 +22,7 @@ class WeatherLoadingState extends WeatherState {
 class WeatherLoadedState extends WeatherState {
   final WeatherForecast weatherForecast;
   final Weather currentWeather;
-  final LinearGradient? gradient;
+  final LinearGradient gradient;
 
   WeatherLoadedState(this.weatherForecast, this.currentWeather, this.gradient);
 
