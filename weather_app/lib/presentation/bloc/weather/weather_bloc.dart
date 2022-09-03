@@ -59,7 +59,19 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );
-    }  else if (weatherCode.contains('11')) {
+    } else if (weatherCode.contains('09') ||
+        weatherCode.contains('10') ||
+        weatherCode.contains('13') ||
+        weatherCode.contains('50')) {
+      return const LinearGradient(
+        colors: [
+          Color.fromARGB(255, 2, 50, 208),
+          Color.fromARGB(255, 3, 1, 135),
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    } else if (weatherCode.contains('11')) {
       return const LinearGradient(
         colors: [
           Colors.purple,
@@ -68,7 +80,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       );
-    } else{
+    } else {
       return const LinearGradient(
         colors: [
           Color.fromARGB(255, 2, 50, 208),
