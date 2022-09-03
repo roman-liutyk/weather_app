@@ -9,7 +9,10 @@ class WeatherSuccesPage extends StatelessWidget {
   final WeatherForecast weatherForecast;
   final LinearGradient gradient;
   const WeatherSuccesPage(
-      {Key? key, required this.currentWeather, required this.weatherForecast, required this.gradient})
+      {Key? key,
+      required this.currentWeather,
+      required this.weatherForecast,
+      required this.gradient})
       : super(key: key);
 
   @override
@@ -18,14 +21,12 @@ class WeatherSuccesPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         width: size.width,
-        decoration: BoxDecoration(
-            gradient: gradient,
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black54,
-                blurRadius: 10,
-              ),
-            ]),
+        decoration: BoxDecoration(gradient: gradient, boxShadow: const [
+          BoxShadow(
+            color: Colors.black54,
+            blurRadius: 10,
+          ),
+        ]),
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -109,7 +110,7 @@ class _WeatherMainInfo extends StatelessWidget {
         IconButton(
           onPressed: () => Navigator.of(context).pop(),
           icon: const Icon(
-            Icons.arrow_back,
+            Icons.search,
             color: Colors.white,
             size: 36,
           ),
